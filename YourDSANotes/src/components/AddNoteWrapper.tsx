@@ -8,28 +8,82 @@ import {
 
 import {Textarea} from '@/components/TextArea'
 import { Button } from "./Buttons";
+import { useState } from 'react';
+
+interface dataObject {
+    titleLink: string,
+    codeSnippet: string,
+    approch: string,
+    rating: number,
+
+}
 
 const AddNoteWrapper: React.FC = ()=>{
+    let data:dataObject = {
+        titleLink: '',
+        codeSnippet: '',
+        approch: '',
+        rating: 1,
+    }
+    // useState hooks
+    const [rating, setRating] = useState<number>(1);
+    const [titleLink, setTitleLink] = useState<string>('');
+    const [codeSnippet, setCodeSnippet] = useState<string>('');
+    const [approch, setApproch] = useState<string>('');
+
+
+    // event handlers
+    const handleRatingClick = ()=>{
+        setRating((rating)=>{
+            if(rating === 5) return 1;
+            return rating + 1;
+        })
+    }
+    const handleTitleLinkChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
+        setTitleLink(e.target.value);
+        // console.log(titleLink);
+    }
+    const handleCodeSnippetChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
+        setCodeSnippet(e.target.value);
+        // console.log(codeSnippet);
+    }
+    const handleApprochChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
+        setApproch(e.target.value);
+        // console.log(approch);
+    }
+
+    const handleSubmit = ()=>{
+        data = {
+            titleLink: titleLink,
+            codeSnippet: codeSnippet,
+            approch: approch,
+            rating: rating,
+        }
+        console.log(JSON.stringify(data));
+        const notesList = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
+        notesList.push(data)
+        localStorage.setItem('dsaNotes', JSON.stringify(notesList));
+    }
     return(
         <Dialog >
-        <DialogTrigger className='bg-rose-600 h-16 w-32 text-2xl text-white rounded-md hover:bg-rose-500'>Add Note</DialogTrigger>
-        <DialogContent  className=' bg-primaryCol-50 h-4/6 border-rose-600 border-4 w-4/6' >
+        <DialogTrigger className='bg-rose-600 h-16 w-32 text-2xl text-white rounded-md hover:bg-rose-500 shadow-md shadow-gray-950'>Add Note</DialogTrigger>
+        <DialogContent  className=' bg-primaryCol-50 h-4/6 border-rose-600 border-4 w-4/6'  >
         <DialogHeader>
             <DialogTitle className='text-xl text-slate-200 ' >Add a New Note</DialogTitle>
             <div className='flex flex-row' >
-                <Button variant={"myButton"}  className="h-12 mr-4 mt-2 text-xl w-24">
-                    2
+                <Button variant={"myButton"}  className="h-12 mr-4 mt-2 text-xl w-24" onClick={handleRatingClick}>
+                    {rating}
                 </Button>
                 <div className='h-12 mt-2 w-full '>
-                    <Textarea className='border-rose-600 resize-none h-full text-slate-200 text-xl' placeholder='paste the question link here (https://.../problems/..)' />
+                    <Textarea className='border-rose-600 resize-none h-full text-slate-200 text-xl' placeholder='paste the question link here (https://.../problems/..)' onChange={handleTitleLinkChange} />
                 </div>
             </div>
             <div className='flex ' >
                 <div className='h-80 w-3/6 mt-3 '>
-                    <Textarea className='resize-none h-full bg-slate-950 text-yellow-200 text-lg  border-rose-600 border-2' spellCheck='false' />
+                    <Textarea className='resize-none h-full bg-slate-950 text-yellow-200 text-lg  border-rose-600 border-2' spellCheck='false' onChange={handleCodeSnippetChange} />
                 </div>
                 <div className='h-64 ml-8 mt-3 w-[500px]'>
-                    <Textarea className='resize-none h-full text-xl text-slate-200 border-rose-600 border-2' spellCheck='false' />
+                    <Textarea className='resize-none h-full text-xl text-slate-200 border-rose-600 border-2' spellCheck='false' onChange={handleApprochChange} />
                     <div className=' justify-evenly '>
                         <Button className="h-12 ml-2 mr-8 mt-2 text-xl w-32 bg-slate-100 text-gray-800">
                             Delete
@@ -37,7 +91,7 @@ const AddNoteWrapper: React.FC = ()=>{
                         <Button className="h-12 mr-8 mt-2 text-xl w-32 bg-slate-100 text-gray-800">
                             Share
                         </Button>
-                        <Button className="h-12  mt-2 text-xl w-32 bg-rose-600 hover:bg-rose-500">
+                        <Button className="h-12  mt-2 text-xl w-32 bg-rose-600 hover:bg-rose-500" onClick={handleSubmit}>
                             Save
                         </Button>
                     </div>

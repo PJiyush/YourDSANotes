@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import './App.css'
-import { ScrollArea } from './components/ScrollableDiv'
-import Row from './components/Row'
+
 import AddNoteWrapper from './components/AddNoteWrapper'
+import RowWrapper from './components/RowWrapper'
 
 function App() {
+  // localStorage.setItem('dsaNotes', JSON.stringify([]))
+  let notesList = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
   return (
     // <div className=' bg-gradient-to-b from-slate-900 to-slate-800 h-lvh' >
     <div className=' bg-primaryCol  h-lvh ' >
@@ -13,16 +16,9 @@ function App() {
       </div>
       <div className="sections bg-transparent  flex justify-center">
       <div className=' mr-4 mt-40' >
-        <AddNoteWrapper/>
+        <AddNoteWrapper  />
       </div>
-      <ScrollArea className="h-[400px] w-4/6 rounded-md border p-4 mt-32 shadow-2xl bg-primaryCol border-transparent  ">
-        <Row ratingId={1} titleLink='https://leetcode.com/problems/median-of-two-sorted-arrays/description/'/>
-        <Row ratingId={1} titleLink='https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&sortBy=submissions'/>
-        <Row ratingId={1} titleLink='https://www.codingninjas.com/studio/problems/set-matrix-zeros_3846774?topList=striver-sde-sheet-problems&problemListRedirection=true'/>
-        <Row ratingId={1} titleLink='https://leetcode.com/problems/median-of-two-sorted-arrays/description/'/>
-        <Row ratingId={1} titleLink='https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&sortBy=submissions'/>
-        <Row ratingId={1} titleLink='https://www.codingninjas.com/studio/problems/set-matrix-zeros_3846774?topList=striver-sde-sheet-problems&problemListRedirection=true'/>
-      </ScrollArea>
+      <RowWrapper notesList={notesList} />
       </div>
     </div>
   )
