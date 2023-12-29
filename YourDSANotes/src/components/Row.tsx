@@ -19,14 +19,14 @@ const Row: React.FC<RowProps> = (props) => {
         })
     }
     return(
-        <div className="bg-rose-500 h-16 flex " >
+        <div className=" bg-primaryCol-50  h-16 flex mt-2 rounded-md shadow-md" >
             <Button variant={"myButton"}  className="h-8 w-16 mt-4 ml-2 text-xl" onClick={handleRatingClick}>
                 {rating}
             </Button>
-            <div className="mt-4 ml-2">
+            <div className="mt-3 ml-8">
                 <a href={titleLink} className="text-black" target="_blank" rel="noreferrer">
                     <HoverCard>
-                        <HoverCardTrigger className="text-black bg-pink-400 text-2xl">
+                        <HoverCardTrigger className="text-rose-100 bg-transparent text-3xl">
                         {extractTitle(titleLink).length > 25 ? extractTitle(titleLink).slice(0,25) + "..." : extractTitle(titleLink)}
                         </HoverCardTrigger>
                         <HoverCardContent className="text-black bg-pink-400">
