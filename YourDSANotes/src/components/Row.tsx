@@ -10,7 +10,7 @@ interface RowProps {
 }
 
 const Row: React.FC<RowProps> = (props) => {
-    const {ratingId, titleLink} = props;
+    const {ratingId, titleLink, } = props;
     const [rating, setRating] = useState<number>(ratingId)
     const handleRatingClick = ()=>{
         setRating((rating)=>{
@@ -37,6 +37,9 @@ const Row: React.FC<RowProps> = (props) => {
                     </HoverCard>
                 </a>
             </div>
+            <Button variant={"myButton"}  className="text-xl float-right">
+                expand
+            </Button>
         </div>
     )
 }

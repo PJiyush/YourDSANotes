@@ -9,8 +9,10 @@ import {
 import {Textarea} from '@/components/TextArea'
 import { Button } from "./Buttons";
 import { useState } from 'react';
+import { useNotes } from '../context'
 
 interface dataObject {
+    id: number,
     titleLink: string,
     codeSnippet: string,
     approch: string,
@@ -20,6 +22,7 @@ interface dataObject {
 
 const AddNoteWrapper: React.FC = ()=>{
     let data:dataObject = {
+        id:0,
         titleLink: '',
         codeSnippet: '',
         approch: '',
@@ -51,18 +54,32 @@ const AddNoteWrapper: React.FC = ()=>{
         setApproch(e.target.value);
         // console.log(approch);
     }
+    const {addNote, notes } = useNotes()!;
+    
 
-    const handleSubmit = ()=>{
+    const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>)=>{
+        e.preventDefault();
+        let flag: boolean = false;
         data = {
+            id:Date.now(),
             titleLink: titleLink,
             codeSnippet: codeSnippet,
             approch: approch,
             rating: rating,
         }
-        console.log(JSON.stringify(data));
-        const notesList = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
-        notesList.push(data)
-        localStorage.setItem('dsaNotes', JSON.stringify(notesList));
+        notes.forEach((note)=>{
+            if(note.titleLink === data.titleLink){
+                console.log('Note already exists');
+                alert('Note already exists');
+                flag = true;
+                return;
+            }
+        })
+        if(!flag) addNote!(data);
+        setRating(1);
+        setTitleLink('');
+        setCodeSnippet('');
+        setApproch('');
     }
     return(
         <Dialog >
