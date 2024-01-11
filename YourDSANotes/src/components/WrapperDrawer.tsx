@@ -30,6 +30,7 @@ const YourComponent = (props:YourComponentProps) => {
 
     const [codeSnippetState, setCodeSnippetState] = useState(codeSnippet);
     const [approchSnippetState, setApprochSnippetState] = useState(approch);
+    const [isCopied, setIsCopied] = useState(false);
 
     const handleCloseDrawer = () => {
         // setIsDrawerOpen(false);
@@ -55,17 +56,32 @@ const YourComponent = (props:YourComponentProps) => {
         notes[index].approch = approchSnippetState;
         updateNote(id,notes[index]);
         console.log('finally ',notes)
+        toggleEdit();
+        handleCloseDrawer();
+    }
+    const handleCopy =(e:React.ChangeEvent<HTMLButtonElement>)=>{
+        e.preventDefault();
+        console.log("copy button is clicked");
+        navigator.clipboard.writeText(titleLink);
+        navigator.vibrate(200)
+        setIsCopied(true);
+        setTimeout(()=>{
+            setIsCopied(false);
+        },2000)
     }
     return (
         <Drawer open={drawerOpen} onClose={handleCloseDrawer}>
-            <DrawerContent className='bg-blue-400 h-2/3'>
+            <DrawerContent className=' bg-primaryCol text-rose-600 h-2/3 border-pink-600'>
                 <DrawerHeader>
-                    <DrawerTitle>{extractTitle(titleLink)}</DrawerTitle>
-                    <DrawerDescription>{titleLink}</DrawerDescription>
+                    <DrawerTitle className='text-2xl'>{extractTitle(titleLink)}</DrawerTitle>
+                    <DrawerDescription>
+                        {titleLink}
+                        <Button variant="secondary" className='' onClick={handleCopy}>{isCopied?'Copied':'copy'}</Button>
+                    </DrawerDescription>
                 </DrawerHeader>
                 <div className='flex h-2/3 content-between gap-8 px-3'>
-                <Textarea value={codeSnippetState} className='h-full'onChange={updateCodeSnippet} />
-                <Textarea value={approchSnippetState} className='h-full' onChange={updateApproachSnippet} />
+                {edit ? <Textarea value={codeSnippetState} className='h-full bg-purple-800'onChange={updateCodeSnippet} /> : <Textarea value={codeSnippet} className='h-full bg-pink-300' />}
+                {edit ? <Textarea value={approchSnippetState} className='h-full bg-purple-800' onChange={updateApproachSnippet} /> : <Textarea value={approch} className='h-full bg-pink-300' />}
                 </div>
                 <DrawerFooter >
                     <div className="flex content-between gap-32">

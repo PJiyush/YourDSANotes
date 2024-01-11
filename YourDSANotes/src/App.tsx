@@ -33,6 +33,14 @@ function App() {
     })
   }
 
+  const deleteNote = (id:number)=>{
+    setNotes((oldNotes)=>{
+      return oldNotes.filter((note)=>{
+        return note.id !== id;
+      })
+    })
+  }
+
 
   useEffect(()=>{
     console.log("useEffect is called");
@@ -53,7 +61,7 @@ function App() {
   },[notes])
 
   return (
-    <NotesProvider value={{notes, addNote, updateNote}}>
+    <NotesProvider value={{notes, addNote, updateNote, deleteNote}}>
     <div className=' bg-primaryCol  h-lvh ' >
       <div className='bg-transparent text-8xl text-slate-200 ml-4' >
         Your DSA
