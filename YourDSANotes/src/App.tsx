@@ -17,11 +17,23 @@ interface dataObject {
 function App() {
   // localStorage.setItem('dsaNotes', JSON.stringify([]))
   const [notes, setNotes] = useState<dataObject[]>([]);
+
   const addNote = (note:dataObject)=>{
     setNotes((oldNotes)=>{
       return [...oldNotes, {...note, id: Date.now()}]
     })
   }
+
+  const updateNote = (id:number, newNote:dataObject)=>{
+    setNotes((oldNotes)=>{
+      return oldNotes.map((note)=>{
+        if(note.id === id) return newNote;
+        else return note;
+      })
+    })
+  }
+
+
   useEffect(()=>{
     console.log("useEffect is called");
     console.log(localStorage.getItem('dsaNotes'));
@@ -41,7 +53,7 @@ function App() {
   },[notes])
 
   return (
-    <NotesProvider value={{notes, addNote}}>
+    <NotesProvider value={{notes, addNote, updateNote}}>
     <div className=' bg-primaryCol  h-lvh ' >
       <div className='bg-transparent text-8xl text-slate-200 ml-4' >
         Your DSA

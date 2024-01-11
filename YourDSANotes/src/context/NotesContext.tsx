@@ -13,6 +13,7 @@ interface dataObject {
 interface dataObjectContext{
     notes:dataObject[],
     addNote:(note:dataObject)=>void
+    updateNote:(id:number,note:dataObject)=>void
 }
 
 export const NotesContext = createContext<dataObjectContext|null>(null)
