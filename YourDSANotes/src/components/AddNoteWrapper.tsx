@@ -81,9 +81,24 @@ const AddNoteWrapper: React.FC = ()=>{
         setCodeSnippet('');
         setApproch('');
     }
+    const handleDownload = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+        e.preventDefault();
+        const link = document.createElement('a');
+        link.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(notes));
+        // link.download = "dsaNotes.json";
+        const tempDate = new Date();
+        link.download = `dsaNotes-${tempDate.getDate()}-${tempDate.getMonth()+1}-${tempDate.getHours()}-${tempDate.getMinutes()}.json`
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
     return(
         <Dialog >
-        <DialogTrigger className='bg-rose-600 h-16 w-32 text-2xl text-white rounded-md hover:bg-rose-500 shadow-md shadow-gray-950'>Add Note</DialogTrigger>
+            <div className='flex flex-col gap-4' >
+                <DialogTrigger className='bg-rose-600 h-16 w-32 text-2xl text-white rounded-md hover:bg-rose-500 shadow-md shadow-gray-950'>Add Note</DialogTrigger>
+                <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' onClick={handleDownload}>Download Notes</Button>
+            </div>
         <DialogContent  className=' bg-primaryCol-50 h-4/6 border-rose-600 border-4 w-4/6'  >
         <DialogHeader>
             <DialogTitle className='text-xl text-slate-200 ' >Add a New Note</DialogTitle>
