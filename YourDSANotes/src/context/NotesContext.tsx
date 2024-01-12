@@ -15,6 +15,7 @@ interface dataObjectContext{
     addNote:(note:dataObject)=>void
     updateNote:(id:number,note:dataObject)=>void
     deleteNote:(id:number)=>void
+    
 }
 
 export const NotesContext = createContext<dataObjectContext|null>(null)
