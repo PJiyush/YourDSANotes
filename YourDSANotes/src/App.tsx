@@ -17,15 +17,13 @@ interface dataObject {
 }
 
 function App() {
-  // localStorage.setItem('dsaNotes', JSON.stringify([]))
   const [notes, setNotes] = useState<dataObject[]>([]);
-
+  const [filt, setFilt] = useState<string>('All');
   const addNote = (note: dataObject) => {
     setNotes((oldNotes) => {
       return [...oldNotes, { ...note, id: Date.now() }]
     })
   }
-
   const updateNote = (id: number, newNote: dataObject) => {
     setNotes((oldNotes) => {
       return oldNotes.map((note) => {
@@ -34,7 +32,6 @@ function App() {
       })
     })
   }
-
   const deleteNote = (id: number) => {
     setNotes((oldNotes) => {
       return oldNotes.filter((note) => {
@@ -42,27 +39,17 @@ function App() {
       })
     })
   }
-
-  const [filt, setFilt] = useState<string>('All');
-
-
+  
   useEffect(() => {
-    console.log("useEffect is called");
-    console.log(localStorage.getItem('dsaNotes'));
     const notesList: dataObject[] = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
-    console.log("notesList is", notesList);
     setNotes((oldNotes) => {
       return [...oldNotes, ...notesList]
     })
-    console.log('set notes are working or not', notes);
-
+    
   }, [])
 
   useEffect(() => {
-    console.log("another useEffect is called");
-    console.log(notes);
     localStorage.setItem('dsaNotes', JSON.stringify(notes))
-    console.log("after setting value", localStorage.getItem('dsaNotes'));
   }, [notes])
 
   return (

@@ -28,6 +28,7 @@ const AddNoteWrapper: React.FC = ()=>{
         approch: '',
         rating: 1,
     }
+
     // useState hooks
     const [rating, setRating] = useState<number>(1);
     const [titleLink, setTitleLink] = useState<string>('');
@@ -44,15 +45,14 @@ const AddNoteWrapper: React.FC = ()=>{
     }
     const handleTitleLinkChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
         setTitleLink(e.target.value);
-        // console.log(titleLink);
     }
     const handleCodeSnippetChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
         setCodeSnippet(e.target.value);
-        // console.log(codeSnippet);
+        
     }
     const handleApprochChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
         setApproch(e.target.value);
-        // console.log(approch);
+    
     }
     const {addNote, notes, deleteNote } = useNotes()!;
     
@@ -118,6 +118,7 @@ const AddNoteWrapper: React.FC = ()=>{
         })
     }
 
+
     return(
         <Dialog >
             <div className='flex flex-col gap-4' >
@@ -125,9 +126,6 @@ const AddNoteWrapper: React.FC = ()=>{
                 <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' onClick={handleDownload}>Download Notes</Button>
                 <input type="file" onInput={handleInput} className='text-[0px]' />
                 <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' onClick={hndleAllDelete}>Delete all</Button>
-                {/* <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md'>Filters</Button> */}
-                {/* <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' >Import Notes</Button> */}
-                {/* <FilterBtn/> */}
             </div>
         <DialogContent  className=' bg-primaryCol-50 h-4/6 border-rose-600 border-4 w-4/6'  >
         <DialogHeader>

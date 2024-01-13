@@ -18,29 +18,22 @@ type YourComponentProps = {
 
 
 const YourComponent = (props:YourComponentProps) => {
-    console.log("props is",props);
-    // const [isDrawerOpen, setIsDrawerOpen] = useState(true);
     const [edit, setEdit] = useState(false);
     const { drawerOpen, setDrawerOpen }  = React.useContext(UtilsContext)!;
-    console.log("drawerOpen is",drawerOpen);
-    
     const {notes, updateNote } = useContext(NotesContext)!;
     const index = notes.findIndex((note)=> note.id === props.id);
     const {id, titleLink, codeSnippet, approch, rating} = notes[index];
-
     const [codeSnippetState, setCodeSnippetState] = useState(codeSnippet);
     const [approchSnippetState, setApprochSnippetState] = useState(approch);
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCloseDrawer = () => {
-        // setIsDrawerOpen(false);
         setDrawerOpen(false)
     };
     const toggleEdit = ()=>{
         setEdit((edit)=>!edit);
     }
     const updateCodeSnippet = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
-        // i have to do it with the help of state
         setCodeSnippetState(e.target.value);
         console.log("code snippet is",e.target.value);
     }
@@ -51,7 +44,6 @@ const YourComponent = (props:YourComponentProps) => {
     const handleSave = (e: React.ChangeEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         console.log("save button is clicked");
-        // i have to update the notes array
         notes[index].codeSnippet = codeSnippetState;
         notes[index].approch = approchSnippetState;
         updateNote(id,notes[index]);

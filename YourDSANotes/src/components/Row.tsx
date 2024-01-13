@@ -3,7 +3,6 @@ import { Button } from "./Buttons";
 import { extractTitle } from "@/helpers/ExtractTitle";
 import{ HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/HoverCard'
 import WrapperDrawer from "./WrapperDrawer";
-// import { DrawerTrigger } from "./expandDrawer";
 import { NotesContext, UtilsProvider } from "@/context";
 
 interface RowProps {
@@ -26,11 +25,9 @@ const Row: React.FC<RowProps> = (props) => {
         })
     }
     const openClick = ()=>{
-        console.log("open button is clicked");
         setOpen(true);
     }
     useEffect(()=>{
-        console.log("open is",open);
         if(open){
             setDrawerOpen(true)
         }
