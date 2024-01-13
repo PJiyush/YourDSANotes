@@ -123,9 +123,11 @@ const AddNoteWrapper: React.FC = ()=>{
             <div className='flex flex-col gap-4' >
                 <DialogTrigger className='bg-rose-600 h-16 w-32 text-2xl text-white rounded-md hover:bg-rose-500 shadow-md shadow-gray-950'>Add Note</DialogTrigger>
                 <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' onClick={handleDownload}>Download Notes</Button>
-                <input type="file" onInput={handleInput}/>
+                <input type="file" onInput={handleInput} className='text-[0px]' />
                 <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' onClick={hndleAllDelete}>Delete all</Button>
+                {/* <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md'>Filters</Button> */}
                 {/* <Button className='bg-rose-600 w-36 h-16 text-lg text-white rounded-md hover:bg-rose-500 shadow-md' >Import Notes</Button> */}
+                {/* <FilterBtn/> */}
             </div>
         <DialogContent  className=' bg-primaryCol-50 h-4/6 border-rose-600 border-4 w-4/6'  >
         <DialogHeader>

@@ -3,7 +3,9 @@ import './App.css'
 
 import AddNoteWrapper from './components/AddNoteWrapper'
 import RowWrapper from './components/RowWrapper'
-import {NotesProvider} from './context'
+import { NotesProvider } from './context'
+import { FiltersProvider } from './context/';
+import FilterBtns from './components/FilterBtns';
 
 interface dataObject {
   id: number,
@@ -18,62 +20,70 @@ function App() {
   // localStorage.setItem('dsaNotes', JSON.stringify([]))
   const [notes, setNotes] = useState<dataObject[]>([]);
 
-  const addNote = (note:dataObject)=>{
-    setNotes((oldNotes)=>{
-      return [...oldNotes, {...note, id: Date.now()}]
+  const addNote = (note: dataObject) => {
+    setNotes((oldNotes) => {
+      return [...oldNotes, { ...note, id: Date.now() }]
     })
   }
 
-  const updateNote = (id:number, newNote:dataObject)=>{
-    setNotes((oldNotes)=>{
-      return oldNotes.map((note)=>{
-        if(note.id === id) return newNote;
+  const updateNote = (id: number, newNote: dataObject) => {
+    setNotes((oldNotes) => {
+      return oldNotes.map((note) => {
+        if (note.id === id) return newNote;
         else return note;
       })
     })
   }
 
-  const deleteNote = (id:number)=>{
-    setNotes((oldNotes)=>{
-      return oldNotes.filter((note)=>{
+  const deleteNote = (id: number) => {
+    setNotes((oldNotes) => {
+      return oldNotes.filter((note) => {
         return note.id !== id;
       })
     })
   }
 
+  const [filt, setFilt] = useState<string>('All');
 
-  useEffect(()=>{
+
+  useEffect(() => {
     console.log("useEffect is called");
     console.log(localStorage.getItem('dsaNotes'));
-    const notesList:dataObject[] = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
-    console.log("notesList is",notesList);
-    setNotes((oldNotes)=>{
-      return [...oldNotes, ...notesList]})
-    console.log('set notes are working or not',notes);
-    
-  },[])
+    const notesList: dataObject[] = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
+    console.log("notesList is", notesList);
+    setNotes((oldNotes) => {
+      return [...oldNotes, ...notesList]
+    })
+    console.log('set notes are working or not', notes);
 
-  useEffect(()=>{
+  }, [])
+
+  useEffect(() => {
     console.log("another useEffect is called");
     console.log(notes);
     localStorage.setItem('dsaNotes', JSON.stringify(notes))
-    console.log("after setting value",localStorage.getItem('dsaNotes'));
-  },[notes])
+    console.log("after setting value", localStorage.getItem('dsaNotes'));
+  }, [notes])
 
   return (
-    <NotesProvider value={{notes, addNote, updateNote, deleteNote}}>
-    <div className=' bg-primaryCol  h-lvh ' >
-      <div className='bg-transparent text-8xl text-slate-200 ml-4' >
-        Your DSA
-        <div>Notes <span className='text-rose-600' >; </span> </div>
+    <NotesProvider value={{ notes, addNote, updateNote, deleteNote }}>
+      <FiltersProvider value={{filt, setFilt}}>
+      <div className=' bg-primaryCol  h-lvh ' >
+        <div className='bg-transparent text-8xl text-slate-200 ml-4' >
+          Your DSA
+          <div>Notes <span className='text-rose-600' >; </span> </div>
+        </div>
+        <div className="sections bg-transparent  flex justify-center">
+          <div className=' mr-4 mt-40' >
+            <AddNoteWrapper />
+          </div>
+          <RowWrapper />
+          <div className='mt-40 ml-4' >
+            <FilterBtns />
+            </div>
+        </div>
       </div>
-      <div className="sections bg-transparent  flex justify-center">
-      <div className=' mr-4 mt-40' >
-        <AddNoteWrapper  />
-      </div>
-      <RowWrapper/>
-      </div>
-    </div>
+      </FiltersProvider>
     </NotesProvider>
   )
 }
