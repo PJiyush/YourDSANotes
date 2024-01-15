@@ -41,7 +41,7 @@ function App() {
     })
   }
 
-  const [filt, setFilt] = useState<string>('All');
+  // const [filt, setFilt] = useState<string>('All');
 
 
   // useEffect(() => {
