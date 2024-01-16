@@ -11,6 +11,8 @@ import { Button } from '@/components/Buttons';
 import {NotesContext, UtilsContext} from '@/context'
 import { extractTitle } from '@/helpers/ExtractTitle';
 import { Textarea } from './TextArea';
+import { MdOutlineDone } from "react-icons/md";
+import { FaRegCopy } from "react-icons/fa6";
 
 type YourComponentProps = {
     id:number,
@@ -61,29 +63,38 @@ const YourComponent = (props:YourComponentProps) => {
             setIsCopied(false);
         },2000)
     }
+    const updateRating = ()=>{
+        if(edit) updateNote(id,{...notes[index], rating: (rating+1)%6})
+    }
+
     return (
         <Drawer open={drawerOpen} onClose={handleCloseDrawer}>
-            <DrawerContent className=' bg-primaryCol text-rose-600 h-2/3 border-pink-600'>
-                <DrawerHeader>
+            <DrawerContent className=' bg-zinc-950 text-emerald-600 h-2/3 border-emerald-600 '>
+                <DrawerHeader className='flex justify-between gap-9'>
+                    <div>
                     <DrawerTitle className='text-2xl'>{extractTitle(titleLink)}</DrawerTitle>
                     <DrawerDescription>
                         {titleLink}
-                        <Button variant="secondary" className='' onClick={handleCopy}>{isCopied?'Copied':'copy'}</Button>
+                        <Button variant="secondary" className='hover:bg-emerald-700 hover:text-white delay-75 ml-4 text-sm border border-emerald-700 hover:border-white' onClick={handleCopy}>{isCopied? <MdOutlineDone/>:<FaRegCopy /> }</Button>
                     </DrawerDescription>
+                    </div>
+                    <div>
+                    <Button variant={'myButton'} className='bg-emerald-800/20 w-28 h-14 my-auto text-3xl text-white border-white border' onClick={updateRating}>{rating}</Button>
+                    </div>
                 </DrawerHeader>
                 <div className='flex h-2/3 content-between gap-8 px-3'>
-                {edit ? <Textarea value={codeSnippetState} className='h-full bg-purple-800'onChange={updateCodeSnippet} /> : <Textarea value={codeSnippet} className='h-full bg-pink-300' />}
-                {edit ? <Textarea value={approchSnippetState} className='h-full bg-purple-800' onChange={updateApproachSnippet} /> : <Textarea value={approch} className='h-full bg-pink-300' />}
+                {edit ? <Textarea value={codeSnippetState} className='h-full bg-emerald-950/80 text-lg text-white'onChange={updateCodeSnippet} /> : <Textarea value={codeSnippet} className='h-full bg-emerald-950/30 text-lg text-emerald-400' />}
+                {edit ? <Textarea value={approchSnippetState} className='h-full bg-zinc-800 text-lg text-yellow-100' onChange={updateApproachSnippet} /> : <Textarea value={approch} className='h-full bg-zinc-950 text-lg text-slate-300' />}
                 </div>
-                <DrawerFooter >
-                    <div className="flex content-between gap-32">
-                    <Button variant="outline" onClick={handleCloseDrawer}>
+                <DrawerFooter className='' >
+                    <div className="flex justify-between gap-8">
+                    {/* <Button variant="outline" onClick={handleCloseDrawer}>
                         Cancel
+                    </Button> */}
+                    <Button variant="destructive" className='w-1/2 bg-emerald-700 hover:bg-emerald-600 text-lg' onClick={toggleEdit}>
+                        {edit ? 'Close edit mode':'Start edit mode'}
                     </Button>
-                    <Button variant="destructive" onClick={toggleEdit}>
-                        Edit
-                    </Button>
-                    <Button variant="destructive" onClick={handleSave}>
+                    <Button variant="destructive" className='w-1/2 bg-emerald-700 hover:bg-emerald-600 text-lg' onClick={handleSave}>
                         Save
                     </Button>
                     </div>

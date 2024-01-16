@@ -98,7 +98,7 @@ function App() {
         <div className='bg-emerald-700/60 h-96 w-96 blur-[320px] z-0 absolute top-[-250px] left-[56px]' ></div>
         <div className='bg-emerald-700/60 h-96 w-96 blur-[320px] z-0 absolute top-[180px] left-[1040px]' ></div>
         <div className='bg-emerald-700/60 h-80 w-80 blur-[400px] z-0 absolute top-[290px] left-[140px]' ></div>
-          <div className='bg-transparent text-8xl text-slate-200 ml-4 z-20' >
+          <div className='bg-transparent text-8xl text-slate-200 ml-4 z-20 font-mono' >
             Your DSA
             <div>Notes <span className='text-emerald-600' >; </span> </div>
           </div>
