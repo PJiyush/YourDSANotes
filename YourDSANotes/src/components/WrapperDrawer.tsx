@@ -43,7 +43,7 @@ const YourComponent = (props:YourComponentProps) => {
         setApprochSnippetState(e.target.value);
         console.log("approach snippet is",e.target.value);
     }
-    const handleSave = (e: React.ChangeEvent<HTMLButtonElement>)=>{
+    const handleSave = (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         console.log("save button is clicked");
         notes[index].codeSnippet = codeSnippetState;
@@ -53,7 +53,7 @@ const YourComponent = (props:YourComponentProps) => {
         toggleEdit();
         handleCloseDrawer();
     }
-    const handleCopy =(e:React.ChangeEvent<HTMLButtonElement>)=>{
+    const handleCopy =(e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         console.log("copy button is clicked");
         navigator.clipboard.writeText(titleLink);

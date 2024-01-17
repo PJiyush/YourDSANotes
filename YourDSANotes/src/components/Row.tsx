@@ -13,7 +13,7 @@ interface RowProps {
 
 const Row: React.FC<RowProps> = (props) => {
     const {ratingId, titleLink, id } = props;
-    const [rating, setRating] = useState<number>(ratingId)
+    const [rating] = useState<number>(ratingId)
     const [open, setOpen] = useState<boolean>(false)
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
     const {deleteNote} = useContext(NotesContext)!;

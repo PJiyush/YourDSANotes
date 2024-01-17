@@ -3,13 +3,12 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from '@/components/AddNote'
 
 import {Textarea} from '@/components/TextArea'
 import { Button } from "./Buttons";
 import { useContext, useEffect, useState } from 'react';
-import { NotesContext, NotesProvider } from '@/context';
+import { NotesContext } from '@/context';
 import { IoClose } from "react-icons/io5";
 interface dataObject {
     id: number,
@@ -73,7 +72,7 @@ const AddNoteWrapper: React.FC = ()=>{
     
     }
     const {addNote, notes, deleteNote} = useContext(NotesContext)!
-    const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>)=>{
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         let flag: boolean = false;
         data = {
