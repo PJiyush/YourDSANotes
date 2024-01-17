@@ -40,54 +40,22 @@ function App() {
       })
     })
   }
-
-  // const [filt, setFilt] = useState<string>('All');
-
-
-  // useEffect(() => {
-  //   console.log("useEffect is called");
-  //   console.log(localStorage.getItem('dsaNotes'));
-  //   const notesList: dataObject[] = JSON.parse(localStorage.getItem('dsaNotes')!) || [];
-  //   console.log("notesList is", notesList);
-  //   setNotes((oldNotes) => {
-  //     return [...oldNotes, ...notesList]
-  //   })
-  //   // setNotes(notesList)
-  //   console.log('set notes are working or not', notes);
-
-  // },[])
-
-  // useEffect(() => {
-  //   console.log("another useEffect is called");
-  //   console.log(notes);
-  //   console.log("printing unique notes", MakeItUnique(notes));
-  //   if(notes.length>0) setNotes(MakeItUnique(notes));
-  //   localStorage.setItem('dsaNotes', JSON.stringify(notes))
-  //   console.log("after setting value", localStorage.getItem('dsaNotes'));
-  // }, [notes.length])
-
-  // useEffect(()=>{
-
-  // },[notes])
-
-  // this would run only first time
   useEffect(() => {
-    console.log("local storage is ", localStorage.getItem('dsaNotes'));
+    // console.log("local storage is ", localStorage.getItem('dsaNotes'));
     const storedValue = localStorage.getItem('dsaNotes');
     try {
       const notesList: dataObject[] = JSON.parse(storedValue!) || [];
-      console.log("notesList is", notesList);
+      // console.log("notesList is", notesList);
   
       setNotes((oldNotes) => [...oldNotes, ...notesList]);
     } catch (error) {
-      console.error("Error parsing JSON:", error);
+      // console.error("Error parsing JSON:", error);
     }
   }, []);
   
-  // this would run everytime notes array changes
   useEffect(()=>{
-    console.log("I am going to run everytime notes array changes");
-    console.log("notes array is", notes);
+    // console.log("I am going to run everytime notes array changes");
+    // console.log("notes array is", notes);
     localStorage.setItem('dsaNotes', JSON.stringify(MakeItUnique(notes)))
   },[notes])
 

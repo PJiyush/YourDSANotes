@@ -8,10 +8,9 @@ import {
 
 import {Textarea} from '@/components/TextArea'
 import { Button } from "./Buttons";
-import { useContext, useState } from 'react';
-// import { useNotes } from '../context'
-import { FaDownload } from "react-icons/fa6";
+import { useContext, useEffect, useState } from 'react';
 import { NotesContext, NotesProvider } from '@/context';
+import { IoClose } from "react-icons/io5";
 interface dataObject {
     id: number,
     titleLink: string,
@@ -49,7 +48,11 @@ const AddNoteWrapper: React.FC = ()=>{
     const [titleLink, setTitleLink] = useState<string>('');
     const [codeSnippet, setCodeSnippet] = useState<string>('');
     const [approch, setApproch] = useState<string>('');
-
+    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+    const [isTitleLinkCorrect, setIsTitleLinkCorrect] = useState<boolean>(false);
+    useEffect(()=>{
+        (titleLink.search('problems/')>0) ? setIsTitleLinkCorrect(true) : setIsTitleLinkCorrect(false);
+    },[titleLink])
 
     // event handlers
     const handleRatingClick = ()=>{
@@ -69,10 +72,7 @@ const AddNoteWrapper: React.FC = ()=>{
         setApproch(e.target.value);
     
     }
-    // const {addNote, notes, deleteNote } = useNotes()!;
     const {addNote, notes, deleteNote} = useContext(NotesContext)!
-    
-
     const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         let flag: boolean = false;
@@ -101,7 +101,6 @@ const AddNoteWrapper: React.FC = ()=>{
         e.preventDefault();
         const link = document.createElement('a');
         link.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(notes));
-        // link.download = "dsaNotes.json";
         const tempDate = new Date();
         link.download = `dsaNotes-${tempDate.getDate()}-${tempDate.getMonth()+1}-${tempDate.getHours()}-${tempDate.getMinutes()}.json`
         link.style.display = "none";
@@ -136,9 +135,9 @@ const AddNoteWrapper: React.FC = ()=>{
 
 
     return(
-        <Dialog >
+        <Dialog open={isDialogOpen} >
             <div className='flex flex-col gap-4 ' >
-                <DialogTrigger className='bg-emerald-700 h-16 w-36 text-lg text-white rounded-md hover:bg-emerald-500 shadow-md shadow-gray-950'>Add Note</DialogTrigger>
+                <Button className='bg-emerald-700 h-16 w-36 text-lg text-white rounded-md hover:bg-emerald-500 shadow-md shadow-gray-950' onClick={()=>setIsDialogOpen(!isDialogOpen)}>Add Note</Button>
                 <Button className='bg-emerald-700 w-36 h-16 text-lg text-white rounded-md hover:bg-emerald-500 shadow-md shadow-gray-950' onClick={handleDownload}>Download Notes</Button>
                 <label htmlFor="inptField" className="relative cursor-pointer ">
                     <div className="bg-emerald-700 text-white h-16 w-36 text-lg px-4 py-4 shadow-md shadow-gray-950 rounded-md">Upload Notes</div>
@@ -148,7 +147,12 @@ const AddNoteWrapper: React.FC = ()=>{
             </div>
         <DialogContent  className=' bg-zinc-950 h-4/6 border-emerald-600 border-4 w-4/6'  >
         <DialogHeader>
-            <DialogTitle className='text-xl text-slate-200 ' >Add a New Note</DialogTitle>
+            <div className="flex justify-between">
+            <DialogTitle className='text-2xl text-slate-200 ' >Add a New Note</DialogTitle>
+            <div className='rounded-[50%] border-[4px] border-zinc-950 delay-75 cursor-pointer hover:border-emerald-700 h-10 w-10 flex align-middle justify-center'>
+            <IoClose className='text-emerald-600 mt-1 text-2xl ' onClick={()=>setIsDialogOpen(!isDialogOpen)}/>
+            </div>
+            </div>
             <div className='flex flex-row' >
                 <Button variant={"myButton"}  className="h-12 mr-4 mt-2 text-xl w-24" onClick={handleRatingClick}>
                     {rating}
@@ -163,10 +167,12 @@ const AddNoteWrapper: React.FC = ()=>{
                 </div>
                 <div className='h-64 ml-8 mt-3 w-[500px]'>
                     <Textarea placeholder='running a for loop to print all values' className='resize-none h-full text-xl text-slate-200 border-emerald-600 border-2' spellCheck='false' onChange={handleApprochChange} />
-                    <div className=' justify-evenly '>
-                        <Button className="h-12  mt-2 text-xl w-full bg-emerald-600 hover:bg-emerald-500" onClick={handleSubmit}>
+                    <div className=' justify-evenly ' onClick={()=>setIsDialogOpen(!isDialogOpen)}>
+                        {isTitleLinkCorrect ?<Button className="h-12  mt-2 text-xl w-full bg-emerald-600 hover:bg-emerald-500" onClick={handleSubmit}>
                             Save
-                        </Button>
+                        </Button>:<Button className="h-12  mt-2 text-xl w-full bg-emerald-600 hover:bg-emerald-500" onClick={()=>alert('Please enter a valid link')}>
+                            Save
+                        </Button>}
                     </div>
                 </div>
             </div>

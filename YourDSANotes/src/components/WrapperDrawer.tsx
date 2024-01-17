@@ -68,7 +68,7 @@ const YourComponent = (props:YourComponentProps) => {
     }
 
     return (
-        <Drawer open={drawerOpen} onClose={handleCloseDrawer}>
+        <Drawer open={drawerOpen} onClose={handleCloseDrawer} >
             <DrawerContent className=' bg-zinc-950 text-emerald-600 h-2/3 border-emerald-600 '>
                 <DrawerHeader className='flex justify-between gap-9'>
                     <div>
